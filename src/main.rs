@@ -24,6 +24,10 @@ struct Args {
     /// Output file to write with json format
    #[arg(short, long, default_value = "./output.json")]
     output: Option<std::path::PathBuf>,
+
+    /// Print progress information
+    #[arg(short, long)]
+    verbose: bool
 }
 
 
@@ -101,10 +105,23 @@ fn main() -> Result<()> {
         iri: "http://schema.org/description",
     };
 
+    // We actually know the file is likely to be >5billion, so it would integer overflow
+    let mut count_triples: i64 = 0;
+
     // A map from wikidata ID to label and description
     let mut entity_map: HashMap<String, EntityInfo> = HashMap::new();
 
+    
+    // while !self.is_end() {
+    //     self.parse_step(on_triple)?;
+    // }
     NTriplesParser::new(reader).parse_all(&mut |t| {
+        count_triples += 1;
+
+        if args.verbose && count_triples % 10^5 == 0 {
+            println!("Parsed {} triples", count_triples)
+        }
+
         let subject = to_named_node(&t.subject);
         let object = to_lang_literal(t.object);
         if subject.is_some() && object.is_some() {
