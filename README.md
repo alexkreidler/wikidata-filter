@@ -2,6 +2,14 @@
 
 A tool to get the human-readable labels, descriptions, and wikidata IDs from a Wikidata dump like `latest-truthy.nt.gz`, `latest-all.nt.gz`, etc.
 
+## Installation
+
+```
+cargo install wikidata-filter
+```
+
+## Example:
+
 Takes a big dump of WikiData like this:
 
 <details>
