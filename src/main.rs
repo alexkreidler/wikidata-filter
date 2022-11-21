@@ -5,9 +5,22 @@ use anyhow::{Context, Result};
 use rio_api::model::{Literal, NamedNode, Subject, Term};
 use rio_api::parser::TriplesParser;
 use rio_turtle::{NTriplesParser, TurtleError};
+use serde::{Deserialize, Serialize};
+// use serde_json::Result;
 
+
+// #[derive(Serialize, Deserialize)]
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 struct EntityInfo {
+    /** Human-readable name (english) */
+    label: Option<String>,
+    /** Also in english */
+    description: Option<String>,
+}
+
+#[derive(Eq, PartialEq, Debug, Clone, Hash, Serialize, Deserialize)]
+struct EntityInfoWithID {
+    id: String,
     /** Human-readable name (english) */
     label: Option<String>,
     /** Also in english */
@@ -49,36 +62,18 @@ fn to_named_node<'a>(subject: &'a Subject) -> Option<&'a NamedNode<'a>> {
 }
 
 fn main() -> Result<()> {
-    //     let file = b"<http://example.com/foo> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
-    // <http://example.com/foo> <http://schema.org/name> \"Foo\" .
-    // <http://example.com/bar> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
-    // <http://example.com/bar> <http://schema.org/name> \"Bar\" .";
     let file = fs::read_to_string("./data/all-20k.nt").expect("Unable to read file");
-
-    let rdf_type = NamedNode {
-        iri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-    };
-    let schema_person = NamedNode {
-        iri: "http://schema.org/Person",
-    };
+    
     let rdfs_label = NamedNode {
         iri: "http://www.w3.org/2000/01/rdf-schema#label",
     };
-    let rdfs_description = NamedNode {
-        iri: "http://www.w3.org/2000/01/rdf-schema#description",
+    let schemaorg_description = NamedNode {
+        iri: "http://schema.org/description",
     };
     let mut count = 0;
 
-    /** A map from wikidata ID to label and description */
-    let mut entity_map = HashMap::new();
-
-    entity_map.insert(
-        "Hey".to_string(),
-        EntityInfo {
-            label: None,
-            description: None,
-        },
-    );
+    // A map from wikidata ID to label and description
+    let mut entity_map: HashMap<String, EntityInfo> = HashMap::new();
 
     NTriplesParser::new(file.as_ref()).parse_all(&mut |t| {
         // if (is_named_node(t.subject) && t.subject) {
@@ -104,7 +99,7 @@ fn main() -> Result<()> {
                         });
                 }
 
-                if t.predicate == rdfs_description.into() {
+                if t.predicate == schemaorg_description.into() {
                     // TODO: refactor to be DRY
                     let description = obj.value;
                     // .clone().to_string();
@@ -119,12 +114,17 @@ fn main() -> Result<()> {
             }
         }
 
-        // if x.iri.contains("http://www.wikidata.org/entity/") && t.predicate == rdfs_label.into() && value. {
-
-        // }
-
         Ok(()) as Result<(), TurtleError>
     })?;
+
+    let mut output = Vec::new();
+    for (k, v) in entity_map {
+        output.push(EntityInfoWithID {id: k, label: v.label, description: v.description });
+    }
+
+    let j = serde_json::to_string(&output)?;
+    println!("{}", j);
+    // println!("{:#?}", output);
 
     Ok(())
 }
