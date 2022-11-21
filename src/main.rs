@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::fs;
+use std::{fs, os};
 use std::path::PathBuf;
 use std::process::exit;
 
@@ -84,12 +84,12 @@ fn get_extension_or_default(buf: &PathBuf) -> &str {
 
 fn main() -> Result<()> {
     let args = Args::parse();
-    if get_extension_or_default(&args.input) != "nt" || get_extension_or_default(&args.output.unwrap()) != "json" {
+    if get_extension_or_default(&args.input) != "nt" || get_extension_or_default(&args.output.clone().unwrap()) != "json" {
         println!("Invalid path args");
         exit(1);
     }
     
-    let file = fs::read_to_string("./data/all-20k.nt").expect("Unable to read file");
+    let file = fs::read_to_string(args.input).expect("Unable to read file");
     
     let rdfs_label = NamedNode {
         iri: "http://www.w3.org/2000/01/rdf-schema#label",
@@ -143,7 +143,10 @@ fn main() -> Result<()> {
     }
 
     let j = serde_json::to_string(&output)?;
-    println!("{}", j);
+    let out = args.output.unwrap();
+    
+    fs::create_dir_all(out.parent().unwrap())?;
+    fs::write(out, j)?;
 
     Ok(())
 }
