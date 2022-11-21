@@ -10,9 +10,11 @@ use rio_api::model::{Literal, NamedNode, Subject, Term};
 use rio_api::parser::TriplesParser;
 use rio_turtle::{NTriplesParser, TurtleError};
 use serde::{Deserialize, Serialize};
+// use serde_jsonlines::{json_lines, write_json_lines};
 // use serde_json::Result;
 
 use clap::Parser;
+use serde_jsonlines::JsonLinesWriter;
 
 /// Tool to filter Wikidata NTriples file to get english labels and descriptions
 #[derive(Parser, Debug)]
@@ -90,13 +92,18 @@ fn get_extension_or_default(buf: &PathBuf) -> &str {
 
 fn main() -> Result<()> {
     let args = Args::parse();
-    if get_extension_or_default(&args.input) != "nt" || get_extension_or_default(&args.output.clone().unwrap()) != "json" {
+    let output = args.output.unwrap();
+    if get_extension_or_default(&args.input) != "nt" || get_extension_or_default(&output) != "json" {
         println!("Invalid path args");
         exit(1);
     }
     
     let f = File::open(args.input)?;
     let reader = BufReader::new(f);
+
+    fs::create_dir_all(&output.parent().unwrap())?;
+    let output_file = File::create(&output)?;
+    let mut writer = JsonLinesWriter::new(output_file);
 
     let rdfs_label = NamedNode {
         iri: "http://www.w3.org/2000/01/rdf-schema#label",
@@ -109,19 +116,11 @@ fn main() -> Result<()> {
     let mut count_triples: i64 = 0;
 
     // A map from wikidata ID to label and description
-    let mut entity_map: HashMap<String, EntityInfo> = HashMap::new();
+    let mut entity_map: HashMap<String, [Option<String>; 3]> = HashMap::new();
 
-    
-    // while !self.is_end() {
-    //     self.parse_step(on_triple)?;
-    // }
+    let mut print_counter: i64 = 0;
+
     NTriplesParser::new(reader).parse_all(&mut |t| {
-        count_triples += 1;
-
-        if args.verbose && count_triples % 10^5 == 0 {
-            println!("Parsed {} triples", count_triples)
-        }
-
         let subject = to_named_node(&t.subject);
         let object = to_lang_literal(t.object);
         if subject.is_some() && object.is_some() {
@@ -129,44 +128,58 @@ fn main() -> Result<()> {
             let obj = object.unwrap();
             if sub.iri.contains("http://www.wikidata.org/entity/") && obj.language == "en" {
                 let wiki_id = sub.iri.replace("http://www.wikidata.org/entity/", "");
+                
                 if t.predicate == rdfs_label.into() {
-                    let label = obj.value;
                     let modval = entity_map.entry(wiki_id.clone());
+                    let label = obj.value;
                     modval
-                        .and_modify(|ent| ent.label = Some(label.to_string()))
-                        .or_insert(EntityInfo {
-                            label: Some(label.to_string()),
-                            description: None,
-                        });
+                        .and_modify(|ent| ent[0] = Some(label.to_string()))
+                        .or_insert([Some(label.to_string()), None, None]);
                 }
 
                 if t.predicate == schemaorg_description.into() {
+                    let modval = entity_map.entry(wiki_id.clone());
                     // TODO: refactor to be DRY
                     let description = obj.value;
-                    let modval = entity_map.entry(wiki_id.clone());
                     modval
-                        .and_modify(|ent| ent.description = Some(description.to_string()))
-                        .or_insert(EntityInfo {
-                            label: None,
-                            description: Some(description.to_string()),
-                        });
+                        .and_modify(|ent| ent[1] = Some(description.to_string()))
+                        .or_insert([None, Some(description.to_string()), None]);
+                }
+                let modval = entity_map.entry(wiki_id.clone());
+                let vals = modval.or_default();
+                // All the real values, are defined, the complete value is not.
+                if vals[0..2].iter().all(|m| m.is_some()) && !vals[2].is_some() {
+                    writer.write(&EntityInfoWithID{id: wiki_id, label: vals[0].clone(), description: vals[1].clone()})?;
+                    vals[2] = Some("DONE".to_string());
                 }
             }
         }
 
+        // The mod isn't much different
+        if print_counter == 10_000 {
+            writer.flush()?;
+            if args.verbose {
+                println!("Parsed {} triples", count_triples);
+                // println!("{:#?}", entity_map);
+                print_counter = 0;
+            }
+        }
+        
+        count_triples += 1;
+        print_counter += 1;
+
         Ok(()) as Result<(), TurtleError>
     })?;
 
-    let mut output = Vec::new();
-    for (k, v) in entity_map {
-        output.push(EntityInfoWithID {id: k, label: v.label, description: v.description });
-    }
+    // let mut output = Vec::new();
+    // for (k, v) in entity_map {
+    //     output.push(EntityInfoWithID {id: k, label: v[0], description: v[1] });
+    // }
 
-    let j = serde_json::to_string(&output)?;
-    let out = args.output.unwrap();
+    // let j = serde_json::to_string(&output)?;
+    // let out = args.output.unwrap();
     
-    fs::create_dir_all(out.parent().unwrap())?;
-    fs::write(out, j)?;
+    // fs::write(out, j)?;
 
     Ok(())
 }

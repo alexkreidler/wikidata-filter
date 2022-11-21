@@ -1,1 +1,143 @@
-[{"id":"Q8","label":"happiness","description":"mental or emotional state of well-being characterized by pleasant emotions"},{"id":"Q42","label":"Douglas Adams","description":"British author and humorist"},{"id":"Q23","label":"George Washington","description":"First President of the United States"},{"id":"Q24","label":"Jack Bauer","description":"character from the television series 24"},{"id":"Q31","label":"Belgium","description":"federal constitutional monarchy in Western Europe"}]
+{"id":"Q31","label":"Belgium","description":"country in western Europe"}
+{"id":"Q8","label":"happiness","description":"mental or emotional state of well-being characterized by pleasant emotions"}
+{"id":"Q23","label":"George Washington","description":"president of the United States from 1789 to 1797"}
+{"id":"Q24","label":"Jack Bauer","description":"character from the television series 24"}
+{"id":"Q42","label":"Douglas Adams","description":"English science fiction writer and humourist (1952–2001)"}
+{"id":"Q1868","label":"Paul Otlet","description":"Belgian author, librarian and colonial thinker"}
+{"id":"Q2013","label":"Wikidata","description":"free knowledge graph hosted by Wikimedia and edited by volunteers"}
+{"id":"Q45","label":"Portugal","description":"country in Southwestern Europe"}
+{"id":"Q51","label":"Antarctica","description":"polar continent in the Southern Hemisphere"}
+{"id":"Q58","label":"penis","description":"primary sexual organ of male animals"}
+{"id":"Q68","label":"computer","description":"general-purpose device for performing arithmetic or logical operations"}
+{"id":"Q75","label":"Internet","description":"global system of connected computer networks based on IP addressing and routing protocols"}
+{"id":"Q102","label":"pneumonoultramicroscopicsilicovolcanoconiosis","description":"artificial word for a lung disease; longest English word published in a dictionary"}
+{"id":"Q103","label":"Supercalifragilisticexpialidocious","description":"song from the film and musical Mary Poppins"}
+{"id":"Q125","label":"November","description":"eleventh month in the Julian and Gregorian calendars"}
+{"id":"Q140","label":"lion","description":"species of big cat"}
+{"id":"Q144","label":"dog","description":"domestic animal"}
+{"id":"Q147","label":"kitten","description":"young cat"}
+{"id":"Q148","label":"People's Republic of China","description":"country in East Asia"}
+{"id":"Q155","label":"Brazil","description":"country in South America"}
+{"id":"Q163","label":"Yorkshire","description":"historic county of England"}
+{"id":"Q177","label":"pizza","description":"popular Italian dish with a flat dough-based base and toppings"}
+{"id":"Q178","label":"pasta","description":"Italian food made from flour, eggs and water and shaped in different forms, usually cooked and served with a sauce"}
+{"id":"Q183","label":"Germany","description":"country in Central Europe"}
+{"id":"Q207","label":"George W. Bush","description":"president of the United States from 2001 to 2009"}
+{"id":"Q210","label":"right angle","description":"90° angle (π/2 radians): an angle that bisects the angle formed by two halves of a straight line"}
+{"id":"Q233","label":"Malta","description":"sovereign state in Southern Europe situated on an archipelago in the Mediterranean Sea"}
+{"id":"Q278","label":"Talisker distillery","description":"whisky distillery in Highland, Scotland, UK"}
+{"id":"Q288","label":"Tours","description":"city and commune in Indre-et-Loire, Centre-Val de Loire, France"}
+{"id":"Q297","label":"Diego Velázquez","description":"Spanish painter (1599-1660)"}
+{"id":"Q298","label":"Chile","description":"country in South America"}
+{"id":"Q317","label":"dictatorship","description":"autocratic form of government which is ruled by a sole leader"}
+{"id":"Q328","label":"English Wikipedia","description":"English-language edition of Wikipedia"}
+{"id":"Q362","label":"World War II","description":"global war, 1939–1945"}
+{"id":"Q368","label":"Augusto Pinochet","description":"Dictator, General, politician of Chile (1915-2006)"}
+{"id":"Q398","label":"Bahrain","description":"country in the Persian Gulf"}
+{"id":"Q411","label":"astrobiology","description":"study of the formation of life on Earth and elsewhere"}
+{"id":"Q412","label":"Pioneer plaque","description":"plaque attached to the Pioneer 10 and Pioneer 11 spacecraft in case extraterrestrial life finds them"}
+{"id":"Q431","label":"zoology","description":"study of the animal kingdom"}
+{"id":"Q433","label":"Gmina Kurów","description":"Polish rural gmina in Lublin Voivodeship"}
+{"id":"Q443","label":"Ich bin ein Berliner","description":"speech given by John F. Kennedy in West Berlin in June 1963"}
+{"id":"Q447","label":"Encyclopédie","description":"general encyclopedia published in Paris, France between 1751 and 1772"}
+{"id":"Q463","label":"Rhône-Alpes","description":"former administrative region of France"}
+{"id":"Q497","label":"anus","description":"digestive track waste expulsion opening"}
+{"id":"Q501","label":"Charles Baudelaire","description":"French poet, essayist and art critic (1821-1867)"}
+{"id":"Q506","label":"flower","description":"sexual reproductive structure found on flowering plants"}
+{"id":"Q511","label":"Museum of Fine Arts of Lyon","description":"art museum in Lyon, France"}
+{"id":"Q514","label":"anatomy","description":"study of the structure and parts of organisms"}
+{"id":"Q524","label":"Mount Vesuvius","description":"volcano on the southwestern coast of Italy"}
+{"id":"Q544","label":"Solar System","description":"the Sun, its planets and their moons"}
+{"id":"Q550","label":"avenue des Champs-Élysées","description":"avenue in Paris, France"}
+{"id":"Q556","label":"hydrogen","description":"chemical element with symbol H and atomic number 1; lightest and most abundant substance in the universe"}
+{"id":"Q585","label":"Oslo","description":"capital city of Norway"}
+{"id":"Q586","label":"Bonn","description":"city in and former capital of Germany"}
+{"id":"Q587","label":"All Saints' Day","description":"Christian feast day"}
+{"id":"Q595","label":"The Intouchables","description":"2011 film directed by Olivier Nakache and Éric Toledano"}
+{"id":"Q597","label":"Lisbon","description":"capital city of Portugal"}
+{"id":"Q616","label":"Beaujolais wine","description":"wine from the Beaujolais region of France"}
+{"id":"Q619","label":"Nicolaus Copernicus","description":"Polish mathematician and astronomer (1473–1543)"}
+{"id":"Q633","label":"Neil Young","description":"Canadian singer, songwriter and filmmaker (born 1945)"}
+{"id":"Q634","label":"planet","description":"celestial body directly orbiting a star or stellar remnant"}
+{"id":"Q640","label":"Harald Krichel","description":"German photographer; former vice chair of Wikimedia Deutschland"}
+{"id":"Q643","label":"Po","description":"longest river in Italy"}
+{"id":"Q647","label":"Rennes","description":"city in the east of Brittany in northwestern France at the confluence of the Ille and the Vilaine"}
+{"id":"Q648","label":"Lille","description":"city in the northern part of France, in French Flanders"}
+{"id":"Q659","label":"north","description":"one of the four cardinal directions"}
+{"id":"Q661","label":"hydraulic ram","description":"cyclic water pump powered by hydropower"}
+{"id":"Q676","label":"prose","description":"form of language which applies ordinary grammatical structure and natural flow of speech"}
+{"id":"Q686","label":"Vanuatu","description":"country In Oceania"}
+{"id":"Q688","label":"chlorine","description":"chemical element with symbol Cl and atomic number 17"}
+{"id":"Q694","label":"South Holland","description":"province of the Netherlands"}
+{"id":"Q716","label":"titanium","description":"chemical element with symbol Ti and atomic number 22"}
+{"id":"Q722","label":"vanadium","description":"chemical element with symbol V and atomic number 23"}
+{"id":"Q732","label":"Francesinha","description":"Portuguese sandwich"}
+{"id":"Q746","label":"croque-madame","description":"baked or fried ham and cheese sandwich served with a poached or lightly fried egg on top"}
+{"id":"Q747","label":"Pierre Corneille","description":"French tragedian"}
+{"id":"Q749","label":"Groningen","description":"capital city of the province of Groningen, the Netherlands"}
+{"id":"Q764","label":"fungus","description":"biological kingdom, separate from plants and animals"}
+{"id":"Q771","label":"Massachusetts","description":"state of the United States of America"}
+{"id":"Q801","label":"Israel","description":"country in Western Asia"}
+{"id":"Q807","label":"Lausanne","description":"capital city of the canton of Vaud, Switzerland"}
+{"id":"Q815","label":"Gabriel Gonzáles Videla","description":"Chilean politician (1898-1980)"}
+{"id":"Q819","label":"Laos","description":"country in Southeast Asia"}
+{"id":"Q844","label":"James Bond","description":"series of books about a British spy"}
+{"id":"Q853","label":"Andrei Tarkovsky","description":"Soviet and Russian filmmaker, writer, film editor, film theorist, and theatre and opera director (1932-1986)"}
+{"id":"Q859","label":"Plato","description":"ancient Greek philosopher"}
+{"id":"Q863","label":"Tajikistan","description":"sovereign state in Central Asia"}
+{"id":"Q869","label":"Thailand","description":"country in Southeast Asia"}
+{"id":"Q873","label":"Meryl Streep","description":"American actress"}
+{"id":"Q878","label":"United Arab Emirates","description":"sovereign state in Southwest Asia"}
+{"id":"Q880","label":"platinum","description":"chemical element with symbol Pt and atomic number 78"}
+{"id":"Q883","label":"Novosibirsk","description":"Russian city; administrative center of Siberian Federal District"}
+{"id":"Q891","label":"Nizhny Novgorod","description":"capital of the Nizhny Novgorod Oblast and the Volga Federal District in central Russia"}
+{"id":"Q898","label":"Omsk","description":"city in Russia"}
+{"id":"Q899","label":"Suez Canal","description":"artificial waterway in Egypt connecting the Mediterranean and the Red Sea"}
+{"id":"Q901","label":"scientist","description":"person who use scientific methods to study in an area of interest"}
+{"id":"Q903","label":"Erta Ale","description":"volcano in Ethiopia"}
+{"id":"Q907","label":"Gordon Freeman","description":"fictional protagonist of the Half Life video game series"}
+{"id":"Q912","label":"Mali","description":"country in West Africa"}
+{"id":"Q916","label":"Angola","description":"sovereign state in Africa"}
+{"id":"Q922","label":"Brač","description":"island of Croatia"}
+{"id":"Q943","label":"yellow","description":"color"}
+{"id":"Q946","label":"Donald Tusk","description":"Polish politician, former President of the European Council, and former Prime Minister of Poland"}
+{"id":"Q951","label":"toilet paper orientation","description":"orientation of the free end of a roll of toilet paper, either over or under the roll, when used with a holder with an axle parallel to both the wall and floor"}
+{"id":"Q952","label":"Reggiolo","description":"town in the province of Reggio Emilia, Emilia-Romagna, Italy"}
+{"id":"Q957","label":"list of lists of lists","description":"Wikimedia list of lists"}
+{"id":"Q961","label":"More Than Life at Stake","description":"Polish television series"}
+{"id":"Q966","label":"Hermann Brunner","description":"recurring supporting character from the Polish television series More Than Life at Stake"}
+{"id":"Q968","label":"Warburg","description":"town in North Rhine-Westphalia, Germany"}
+{"id":"Q973","label":"Ob","description":"river in Russia; second-longest river in Asia"}
+{"id":"Q978","label":"meme","description":"idea, behavior or style that spreads within a culture"}
+{"id":"Q982","label":"FIS Alpine Ski World Cup","description":"top international circuit of alpine skiing competitions"}
+{"id":"Q990","label":"Czterej pancerni i pies","description":"Polish television series"}
+{"id":"Q997","label":"Andrei Sakharov","description":"Soviet nuclear physicist and human rights activist"}
+{"id":"Q1044","label":"Sierra Leone","description":"sovereign state in West Africa"}
+{"id":"Q1049","label":"Sudan","description":"country in Northeast Africa"}
+{"id":"Q1056","label":"Italo Balbo","description":"Italian Marshal of the Air Force and minister"}
+{"id":"Q1057","label":"metabolism","description":"set of chemical reactions and pathways by which living organisms transform chemical substances"}
+{"id":"Q1058","label":"Narendra Modi","description":"Prime Minister of India since 2014"}
+{"id":"Q1071","label":"geography","description":"science that studies the terrestrial surface, the societies that inhabit it and the territories, landscapes, places or regions that form it when interacting with each other"}
+{"id":"Q1092","label":"Star Trek","description":"science fiction media franchise"}
+{"id":"Q1093","label":"Limburg","description":"province of the Netherlands"}
+{"id":"Q1099","label":"antimony","description":"chemical element with symbol Sb and atomic number of 51"}
+{"id":"Q1146","label":"unbinilium","description":"hypothetical chemical element with the atomic number 120"}
+{"id":"Q1149","label":"Indira Gandhi","description":"3rd Prime Minister of India (1917-1984)"}
+{"id":"Q1151","label":"Hector Berlioz","description":"French composer and conductor (1803–1869)"}
+{"id":"Q1161","label":"Limburg","description":"Wikimedia disambiguation page"}
+{"id":"Q1172","label":"Groß Borstel","description":"quarter of the German city of Hamburg"}
+{"id":"Q1181","label":"Hoheluft-Ost","description":"quarter of the German city of Hamburg"}
+{"id":"Q1183","label":"Puerto Rico","description":"unincorporated territory of the United States of America"}
+{"id":"Q1201","label":"Saarland","description":"state of Germany"}
+{"id":"Q1204","label":"Illinois","description":"state of the United States of America"}
+{"id":"Q1228","label":"Oscar Luigi Scalfaro","description":"9th President of Italy (1918-2012)"}
+{"id":"Q1232","label":"dubnium","description":"chemical element with the atomic number of 105"}
+{"id":"Q1251","label":"Cottian Alps","description":"mountain range in the South-Western part of the Alps"}
+{"id":"Q1253","label":"Ban Ki-moon","description":"8th Secretary-General of the United Nations"}
+{"id":"Q1254","label":"Kofi Annan","description":"7th Secretary-General of the United Nations (1938-2018)"}
+{"id":"Q1258","label":"meitnerium","description":"chemical element with atomic number 109 and symbol Mt"}
+{"id":"Q1269","label":"jam","description":"spread made from fruit"}
+{"id":"Q1270","label":"Pennine Alps","description":"mountain range in the Western part of the Alps"}
+{"id":"Q1276","label":"Leonard Cohen","description":"Canadian poet and singer-songwriter (1934–2016)"}
+{"id":"Q1277","label":"Rhaetian Alps","description":"mountain range in the Central-Eastern Alps"}
+{"id":"Q1281","label":"Category:Contents","description":"top-level category of a Wikimedia project"}
