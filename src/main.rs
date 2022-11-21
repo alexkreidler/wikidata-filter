@@ -1,5 +1,7 @@
 use std::collections::HashMap;
-use std::{fs, os};
+use std::fs::File;
+use std::io::BufReader;
+use std::{fs};
 use std::path::PathBuf;
 use std::process::exit;
 
@@ -89,8 +91,9 @@ fn main() -> Result<()> {
         exit(1);
     }
     
-    let file = fs::read_to_string(args.input).expect("Unable to read file");
-    
+    let f = File::open(args.input)?;
+    let reader = BufReader::new(f);
+
     let rdfs_label = NamedNode {
         iri: "http://www.w3.org/2000/01/rdf-schema#label",
     };
@@ -101,7 +104,7 @@ fn main() -> Result<()> {
     // A map from wikidata ID to label and description
     let mut entity_map: HashMap<String, EntityInfo> = HashMap::new();
 
-    NTriplesParser::new(file.as_ref()).parse_all(&mut |t| {
+    NTriplesParser::new(reader).parse_all(&mut |t| {
         let subject = to_named_node(&t.subject);
         let object = to_lang_literal(t.object);
         if subject.is_some() && object.is_some() {
