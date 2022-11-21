@@ -11,3 +11,4 @@ rio_api = "0.7.1"
 rio_turtle = "0.7.1"
 serde = { version = "1.0.147", features = ["derive"] }
 serde_json = "1.0.88"
+clap = { version = "4.0", features = ["derive"] } 

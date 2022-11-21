@@ -1,12 +1,29 @@
 use std::collections::HashMap;
 use std::fs;
+use std::path::PathBuf;
+use std::process::exit;
 
-use anyhow::{Context, Result};
+use anyhow::{Result};
 use rio_api::model::{Literal, NamedNode, Subject, Term};
 use rio_api::parser::TriplesParser;
 use rio_turtle::{NTriplesParser, TurtleError};
 use serde::{Deserialize, Serialize};
 // use serde_json::Result;
+
+use clap::Parser;
+
+/// Tool to filter Wikidata NTriples file to get english labels and descriptions
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    /// Input file to read in n-triples (.nt) file format
+    input: std::path::PathBuf,
+
+    /// Output file to write with json format
+   #[arg(short, long, default_value = "./output.json")]
+    output: Option<std::path::PathBuf>,
+}
+
 
 
 // #[derive(Serialize, Deserialize)]
@@ -46,8 +63,8 @@ fn to_lang_literal(object: Term) -> Option<LanguageTaggedString> {
             Literal::LanguageTaggedString { value, language } => {
                 Some(LanguageTaggedString { value, language })
             }
-            Literal::Simple { value } => None,
-            Literal::Typed { value, datatype } => None,
+            Literal::Simple { value: _ } => None,
+            Literal::Typed { value: _, datatype: _ } => None,
         },
         Term::Triple(_) => None,
     }
@@ -61,7 +78,17 @@ fn to_named_node<'a>(subject: &'a Subject) -> Option<&'a NamedNode<'a>> {
     }
 }
 
+fn get_extension_or_default(buf: &PathBuf) -> &str {
+    buf.extension().unwrap_or_default().to_str().unwrap_or_default()
+}
+
 fn main() -> Result<()> {
+    let args = Args::parse();
+    if get_extension_or_default(&args.input) != "nt" || get_extension_or_default(&args.output.unwrap()) != "json" {
+        println!("Invalid path args");
+        exit(1);
+    }
+    
     let file = fs::read_to_string("./data/all-20k.nt").expect("Unable to read file");
     
     let rdfs_label = NamedNode {
@@ -70,27 +97,21 @@ fn main() -> Result<()> {
     let schemaorg_description = NamedNode {
         iri: "http://schema.org/description",
     };
-    let mut count = 0;
 
     // A map from wikidata ID to label and description
     let mut entity_map: HashMap<String, EntityInfo> = HashMap::new();
 
     NTriplesParser::new(file.as_ref()).parse_all(&mut |t| {
-        // if (is_named_node(t.subject) && t.subject) {
-
-        // }
-        // let x: NamedNode = NamedNode::try_from(t.subject)?;
-        // let subj: Literal = Literal::try_from(t.subject)?;
         let subject = to_named_node(&t.subject);
         let object = to_lang_literal(t.object);
-        if (subject.is_some() && object.is_some()) {
+        if subject.is_some() && object.is_some() {
             let sub = subject.unwrap();
             let obj = object.unwrap();
             if sub.iri.contains("http://www.wikidata.org/entity/") && obj.language == "en" {
-                let wikiID = sub.iri.replace("http://www.wikidata.org/entity/", "");
+                let wiki_id = sub.iri.replace("http://www.wikidata.org/entity/", "");
                 if t.predicate == rdfs_label.into() {
                     let label = obj.value;
-                    let modval = entity_map.entry(wikiID.clone());
+                    let modval = entity_map.entry(wiki_id.clone());
                     modval
                         .and_modify(|ent| ent.label = Some(label.to_string()))
                         .or_insert(EntityInfo {
@@ -102,8 +123,7 @@ fn main() -> Result<()> {
                 if t.predicate == schemaorg_description.into() {
                     // TODO: refactor to be DRY
                     let description = obj.value;
-                    // .clone().to_string();
-                    let modval = entity_map.entry(wikiID.clone());
+                    let modval = entity_map.entry(wiki_id.clone());
                     modval
                         .and_modify(|ent| ent.description = Some(description.to_string()))
                         .or_insert(EntityInfo {
@@ -124,7 +144,6 @@ fn main() -> Result<()> {
 
     let j = serde_json::to_string(&output)?;
     println!("{}", j);
-    // println!("{:#?}", output);
 
     Ok(())
 }
