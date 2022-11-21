@@ -120,56 +120,67 @@ fn main() -> Result<()> {
 
     let mut print_counter: i64 = 0;
 
-    NTriplesParser::new(reader).parse_all(&mut |t| {
-        let subject = to_named_node(&t.subject);
-        let object = to_lang_literal(t.object);
-        if subject.is_some() && object.is_some() {
-            let sub = subject.unwrap();
-            let obj = object.unwrap();
-            if sub.iri.contains("http://www.wikidata.org/entity/") && obj.language == "en" {
-                let wiki_id = sub.iri.replace("http://www.wikidata.org/entity/", "");
-                
-                if t.predicate == rdfs_label.into() {
-                    let modval = entity_map.entry(wiki_id.clone());
-                    let label = obj.value;
-                    modval
-                        .and_modify(|ent| ent[0] = Some(label.to_string()))
-                        .or_insert([Some(label.to_string()), None, None]);
-                }
+    let mut parser = NTriplesParser::new(reader);
 
-                if t.predicate == schemaorg_description.into() {
+
+    while !parser.is_end() {
+        let result = parser.parse_step(&mut |t| {
+            let subject = to_named_node(&t.subject);
+            let object = to_lang_literal(t.object);
+            if subject.is_some() && object.is_some() {
+                let sub = subject.unwrap();
+                let obj = object.unwrap();
+                if sub.iri.contains("http://www.wikidata.org/entity/") && obj.language == "en" {
+                    let wiki_id = sub.iri.replace("http://www.wikidata.org/entity/", "");
+                    
+                    if t.predicate == rdfs_label.into() {
+                        let modval = entity_map.entry(wiki_id.clone());
+                        let label = obj.value;
+                        modval
+                            .and_modify(|ent| ent[0] = Some(label.to_string()))
+                            .or_insert([Some(label.to_string()), None, None]);
+                    }
+    
+                    if t.predicate == schemaorg_description.into() {
+                        let modval = entity_map.entry(wiki_id.clone());
+                        // TODO: refactor to be DRY
+                        let description = obj.value;
+                        modval
+                            .and_modify(|ent| ent[1] = Some(description.to_string()))
+                            .or_insert([None, Some(description.to_string()), None]);
+                    }
                     let modval = entity_map.entry(wiki_id.clone());
-                    // TODO: refactor to be DRY
-                    let description = obj.value;
-                    modval
-                        .and_modify(|ent| ent[1] = Some(description.to_string()))
-                        .or_insert([None, Some(description.to_string()), None]);
-                }
-                let modval = entity_map.entry(wiki_id.clone());
-                let vals = modval.or_default();
-                // All the real values, are defined, the complete value is not.
-                if vals[0..2].iter().all(|m| m.is_some()) && !vals[2].is_some() {
-                    writer.write(&EntityInfoWithID{id: wiki_id, label: vals[0].clone(), description: vals[1].clone()})?;
-                    vals[2] = Some("DONE".to_string());
+                    let vals = modval.or_default();
+                    // All the real values, are defined, the complete value is not.
+                    if vals[0..2].iter().all(|m| m.is_some()) && !vals[2].is_some() {
+                        writer.write(&EntityInfoWithID{id: wiki_id, label: vals[0].clone(), description: vals[1].clone()})?;
+                        vals[2] = Some("DONE".to_string());
+                    }
                 }
             }
-        }
-
-        // The mod isn't much different
-        if print_counter == 10_000 {
-            writer.flush()?;
-            if args.verbose {
-                println!("Parsed {} triples", count_triples);
-                // println!("{:#?}", entity_map);
-                print_counter = 0;
+    
+            // The mod isn't much different
+            if print_counter == 10_000 {
+                writer.flush()?;
+                if args.verbose {
+                    println!("Parsed {} triples", count_triples);
+                    // println!("{:#?}", entity_map);
+                    print_counter = 0;
+                }
             }
+            
+            count_triples += 1;
+            print_counter += 1;
+    
+            Ok(()) as Result<(), TurtleError>
+        });
+        match result {
+            Ok(_) => continue,
+            Err(error) => println!("{}", error),
         }
-        
-        count_triples += 1;
-        print_counter += 1;
+    }
 
-        Ok(()) as Result<(), TurtleError>
-    })?;
+    // .parse_all()?;
 
     // let mut output = Vec::new();
     // for (k, v) in entity_map {
