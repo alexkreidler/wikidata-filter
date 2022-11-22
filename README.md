@@ -77,6 +77,10 @@ And generates a JSON document like this:
 ]
 ```
 
-## Dump
+## Wikidata parsing progress
 
 Most recent dump has an estimated 5,011,766,418 lines.
+
+Did 150 million lines/100k entities in 10 minutes with verbose mode on.
+
+With a release build, does about 1 million entities in 4 minutes. There are about 100 million entities, so it would take about (100*4/60=) 6 hours to get all of them. The final JSON size could be around (100mil/2mil) * 200 megabytes = 10 gigabytes.
